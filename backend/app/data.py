@@ -1,7 +1,9 @@
+from datetime import datetime
 import sqlite3
 import uuid
 import pandas as pd
 from sqlite3 import Error
+from models.models import Comment
 from models.models import Ticket
 
 DB_FILE = "help-desk.db"
@@ -11,6 +13,23 @@ class Database:
     def __init__(self) -> None:
         self.conn = self.create_connection()
         self.init_tables()
+
+    def save_comment(self, comment: Comment):
+        sql = f"""
+          INSERT INTO comments(id, user, timestamp, comment, ticketId)
+          VALUES(?,?,?,?,?)
+        """
+        comment_tup = (
+            str(uuid.uuid4()),
+            "Support",
+            str(datetime.today()),
+            comment.comment,
+            comment.ticketId,
+        )
+        cur = self.conn.cursor()
+        cur.execute(sql, comment_tup)
+        print(f"Inserting {comment_tup}")
+        self.conn.commit()
 
     def save_ticket(self, ticket: Ticket):
         sql = f"""
@@ -43,6 +62,18 @@ class Database:
         rows = res.fetchall()
         return rows
 
+    def get_all_comments(self, ticketId):
+        sql = f"""
+          SELECT * FROM tickets 
+          LEFT JOIN comments 
+          ON tickets.id=comments.ticketId
+          WHERE ticket.id = '{ticketId}'
+        """
+        cur = self.conn.cursor()
+        res = cur.execute(sql)
+        rows = res.fetchall()
+        return rows
+
     def update_ticket_status_by_id(self, i_d, new_status):
         sql = f"""UPDATE tickets SET status = '{new_status}' WHERE id = '{i_d}'"""
         cur = self.conn.cursor()
@@ -67,9 +98,21 @@ class Database:
             status text
           );
         """
+        comments_sql_command = """
+          CREATE TABLE IF NOT EXISTS comments (
+            id text PRIMARY KEY,
+            user text,
+            timestamp int,
+            comment text,
+            ticketId text,
+            FOREIGN KEY (ticketId) REFERENCES tickets (id)
+          );
+        """
         self._create_table(tickets_sql_command)
+        self._create_table(comments_sql_command)
 
     def _create_table(self, sql_command):
+        print(sql_command)
         try:
             c = self.conn.cursor()
             c.execute(sql_command)
@@ -78,3 +121,6 @@ class Database:
 
     def _print_tickets(self):
         print(pd.read_sql_query("SELECT * FROM tickets", self.conn))
+
+    def _print_comments(self):
+        print(pd.read_sql_query("SELECT * FROM comments", self.conn))

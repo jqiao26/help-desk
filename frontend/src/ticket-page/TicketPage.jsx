@@ -1,6 +1,7 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { createTicket } from "../features/ticket/tickets";
+import { btnStyle } from "../styles/commonStyles";
 
 function TicketPage() {
   const dispatch = useDispatch();
@@ -53,19 +54,7 @@ function TicketPage() {
             multiline
           />
         </Box>
-        <Button
-          type="submit"
-          sx={{
-            mt: 1.5,
-            maxWidth: "90px",
-            color: "#ffffff",
-            backgroundColor: "#000000",
-            justifyContent: "center",
-            ":hover": {
-              backgroundColor: "#808080",
-            },
-          }}
-        >
+        <Button type="submit" sx={btnStyle}>
           Submit
         </Button>
       </Box>

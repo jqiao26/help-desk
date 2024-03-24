@@ -10,7 +10,6 @@ import { useDispatch } from "react-redux";
 import { updateTicketStatusById } from "../features/ticket/tickets";
 
 function TicketSideBar({ ticket }) {
-  console.log(ticket.status);
   const { email, status } = ticket;
   const dispatch = useDispatch();
 
@@ -30,14 +29,6 @@ function TicketSideBar({ ticket }) {
       }}
     >
       <Divider />
-      <Grid container spacing={3}>
-        <Grid item md={6}>
-          <Typography fontWeight={900}>Reporter</Typography>
-        </Grid>
-        <Grid item md={6}>
-          {email}
-        </Grid>
-      </Grid>
       <Grid container spacing={3} display="flex" alignItems="center">
         <Grid item md={6}>
           <Typography fontWeight={900}>Status</Typography>
@@ -52,6 +43,14 @@ function TicketSideBar({ ticket }) {
             <MenuItem value="new">New</MenuItem>
             <MenuItem value="resolved">Resolved</MenuItem>
           </Select>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item md={6}>
+          <Typography fontWeight={900}>Reporter</Typography>
+        </Grid>
+        <Grid item md={6}>
+          {email}
         </Grid>
       </Grid>
     </Box>

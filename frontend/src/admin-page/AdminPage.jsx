@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTicketById, fetchTickets } from "../features/ticket/tickets";
+import { fetchTickets } from "../features/ticket/tickets";
 import { useNavigate } from "react-router-dom";
 
 const columns = (onTicketClick) => {
@@ -58,13 +58,10 @@ const columns = (onTicketClick) => {
 
 function AdminPage() {
   const { tickets, ticketsLoading } = useSelector((state) => state.tickets);
-  console.log(tickets);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function onTicketClick(ticketId) {
-    console.log(ticketId);
-    dispatch(fetchTicketById(ticketId));
     navigate(`ticket/${ticketId}`);
   }
 

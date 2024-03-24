@@ -14,3 +14,15 @@ class TicketById(BaseModel):
     email: str
     summary: str
     status: str
+
+
+class CommentResponse(BaseModel):
+    id: str
+    user: str
+    timestamp: str
+    comment: str
+
+
+class Comment(BaseModel):
+    ticketId: str
+    comment: str

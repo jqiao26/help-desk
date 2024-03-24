@@ -13,7 +13,6 @@ export const fetchTicketById = createAsyncThunk('fetchTicketById', async (id) =>
 
 export const updateTicketStatusById = createAsyncThunk('updateTicketStatusById', async (newTicket) => {
   const { id, name, status, summary, email } = newTicket
-  console.log('update', newTicket)
   axios.patch(`http://localhost:8000/update-ticket-by-id`, {
     id: id, name: name, status: status, summary: summary, email: email
   })
@@ -21,7 +20,6 @@ export const updateTicketStatusById = createAsyncThunk('updateTicketStatusById',
 
 export const createTicket = createAsyncThunk('createTicket', async (ticket) => {
   const { name, summary, email } = ticket
-  console.log(ticket)
   await axios.post('http://localhost:8000/create-ticket', {
     name: name, email: email, summary: summary
   })
@@ -30,13 +28,19 @@ export const createTicket = createAsyncThunk('createTicket', async (ticket) => {
 export const ticketsSlice = createSlice({
   name: 'helpDesk',
   initialState: {
+    curTab: 0,
+
     tickets: [],
     ticketsLoading: false,
 
     ticketDetail: undefined,
     ticketDetailLoading: false,
   },
-  reducers: {},
+  reducers: {
+    setCurTab(state, action) {
+      state.curTab = action.payload
+    }
+  },
   extraReducers(builder) {
     builder.addCase(fetchTickets.pending, (state) => {
       state.ticketsLoading = true
@@ -56,4 +60,5 @@ export const ticketsSlice = createSlice({
   }
 })
 
+export const { setCurTab } = ticketsSlice.actions
 export default ticketsSlice.reducer
