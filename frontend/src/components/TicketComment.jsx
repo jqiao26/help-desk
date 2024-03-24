@@ -1,38 +1,26 @@
-import { Box, Typography, TextField, Button } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { createComment } from "../features/comment/comments";
-import { btnStyle } from "../styles/commonStyles";
+import { Box, Divider, Typography } from "@mui/material";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
-function TicketComment({ ticket }) {
-  const { id } = ticket;
-  const [commentDraft, setCommentDraft] = useState("");
-  const dispatch = useDispatch();
-
-  function handlePostComment() {
-    console.log(id, commentDraft);
-    dispatch(createComment({ ticketId: id, comment: commentDraft }));
-  }
+function TicketComment({ comment: commentObj }) {
+  const { timestamp, user, comment } = commentObj;
 
   return (
     <Box
       sx={{
-        p: 7,
-        width: "100%",
         display: "flex",
         flexDirection: "column",
+        gap: 0.5,
       }}
     >
-      <Typography mb={2}>Leave a Comment</Typography>
-      <TextField
-        value={commentDraft}
-        onChange={(e) => setCommentDraft(e.target.value)}
-        minRows={3}
-      />
-      <Button size="small" sx={btnStyle} onClick={handlePostComment}>
-        Post
-      </Button>
+      <Divider sx={{ mb: 1 }} />
+      <Box display="flex" gap={0.5} alignItems="center">
+        <AccountCircleOutlinedIcon sx={{ mb: 0.5 }} />
+        <Typography>{user}</Typography>
+        <Typography ml={1} color="gray">
+          {new Date(timestamp).toDateString()}
+        </Typography>
+      </Box>
+      <Typography>{comment}</Typography>
     </Box>
   );
 }

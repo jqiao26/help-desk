@@ -53,7 +53,6 @@ export const ticketsSlice = createSlice({
       state.ticketDetailLoading = true
     })
     builder.addCase(fetchTicketById.fulfilled, (state, action) => {
-      console.log(action.payload)
       state.ticketDetail = action.payload
       state.ticketDetailLoading = false
     })

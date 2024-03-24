@@ -42,7 +42,7 @@ async def get_tickets() -> list:
 
 @app.get("/get-comments-by-ticket")
 async def get_comments_by_ticket(ticketId) -> list[CommentResponse]:
-    comments = db.get_all_comments()
+    comments = db.get_all_comments(ticketId)
     comment_response = []
     for comment in comments:
         id, user, timestamp, comment, ticketId = comment

@@ -1,3 +1,4 @@
+from asyncio import constants
 from datetime import datetime
 import sqlite3
 import uuid
@@ -64,10 +65,10 @@ class Database:
 
     def get_all_comments(self, ticketId):
         sql = f"""
-          SELECT * FROM tickets 
-          LEFT JOIN comments 
-          ON tickets.id=comments.ticketId
-          WHERE ticket.id = '{ticketId}'
+          SELECT comments.id,user,timestamp,comment,ticketId FROM comments 
+          LEFT JOIN tickets 
+          ON comments.ticketId = tickets.id
+          WHERE tickets.id = '{ticketId}'
         """
         cur = self.conn.cursor()
         res = cur.execute(sql)
@@ -112,7 +113,6 @@ class Database:
         self._create_table(comments_sql_command)
 
     def _create_table(self, sql_command):
-        print(sql_command)
         try:
             c = self.conn.cursor()
             c.execute(sql_command)

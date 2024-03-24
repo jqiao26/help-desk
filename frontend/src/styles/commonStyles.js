@@ -8,3 +8,9 @@ export const btnStyle = {
     backgroundColor: "#808080",
   },
 }
+
+export const statusMapping = {
+  'resolved' : 'lightgreen',
+  'in progress': 'yellow',
+  'new': 'lightblue'
+}

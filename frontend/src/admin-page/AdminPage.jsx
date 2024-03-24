@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTickets } from "../features/ticket/tickets";
 import { useNavigate } from "react-router-dom";
+import { statusMapping } from "../styles/commonStyles";
 
 const columns = (onTicketClick) => {
   return [
@@ -45,6 +46,20 @@ const columns = (onTicketClick) => {
       width: 110,
       flex: 1,
       editable: true,
+      renderCell: (params) => (
+        <Box display="flex" alignItems="center" gap={1}>
+          <Box
+            sx={{
+              backgroundColor: statusMapping[params.value],
+              width: "10px",
+              height: "10px",
+              borderRadius: "50%",
+              mb: 0.25,
+            }}
+          ></Box>
+          {params.value}
+        </Box>
+      ),
     },
     {
       field: "summary",

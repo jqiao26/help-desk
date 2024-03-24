@@ -29,6 +29,11 @@ function HelpDesk() {
           value={curTab}
           onChange={handleChange}
           aria-label="basic tabs example"
+          sx={{
+            ".MuiTab-textColorPrimary": {
+              color: "black",
+            },
+          }}
           TabIndicatorProps={{
             style: {
               backgroundColor: "black",
