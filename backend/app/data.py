@@ -1,8 +1,6 @@
-from asyncio import constants
 from datetime import datetime
 import sqlite3
 import uuid
-import pandas as pd
 from sqlite3 import Error
 from models.models import Comment
 from models.models import Ticket
@@ -118,9 +116,3 @@ class Database:
             c.execute(sql_command)
         except Error as e:
             print(e)
-
-    def _print_tickets(self):
-        print(pd.read_sql_query("SELECT * FROM tickets", self.conn))
-
-    def _print_comments(self):
-        print(pd.read_sql_query("SELECT * FROM comments", self.conn))

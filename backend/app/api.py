@@ -82,7 +82,6 @@ async def update_ticket_status_by_id(new_ticket: TicketById):
 async def create_comment(comment: Comment):
     print("Creating comment")
     db.save_comment(comment)
-    db._print_comments()
     return
 
 
@@ -90,5 +89,4 @@ async def create_comment(comment: Comment):
 async def create_ticket(ticket: Ticket):
     print(f"Sending email to {ticket.email}")
     db.save_ticket(ticket)
-    db._print_tickets()
     return
