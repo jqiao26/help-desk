@@ -45,7 +45,6 @@ const columns = (onTicketClick) => {
       sortable: true,
       width: 110,
       flex: 1,
-      editable: true,
       renderCell: (params) => (
         <Box display="flex" alignItems="center" gap={1}>
           <Box
@@ -91,7 +90,10 @@ function AdminPage() {
   return ticketsLoading ? (
     <Typography>Loading...</Typography>
   ) : (
-    <Box sx={{ width: "100%", height: "87vh" }}>
+    <Box sx={{ mx: "2%", my: "2%", height: "85vh" }}>
+      <Typography mb={2} variant="h6">
+        Current Tickets
+      </Typography>
       <DataGrid
         rows={tickets}
         columns={columns(onTicketClick)}

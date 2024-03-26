@@ -3,13 +3,13 @@ import axios from 'axios'
 
 export const createComment = createAsyncThunk('createComment', async (commentBody) => {
   const { comment, ticketId } = commentBody
-  await axios.post('http://localhost:8000/create-comment', {
+  await axios.post(`${process.env.REACT_APP_BACKEND_URL}/create-comment`, {
     ticketId: ticketId, comment: comment
   })
 })
 
 export const fetchComments = createAsyncThunk('fetchComments', async (ticketId) => {
-  const response = await axios.get(`http://localhost:8000/get-comments-by-ticket?ticketId=${ticketId}`)
+  const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/get-comments-by-ticket?ticketId=${ticketId}`)
   return response.data
 })
 

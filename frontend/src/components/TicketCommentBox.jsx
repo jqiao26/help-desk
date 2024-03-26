@@ -1,4 +1,11 @@
-import { Box, Typography, TextField, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  SnackbarContent,
+} from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createComment, fetchComments } from "../features/comment/comments";
@@ -9,6 +16,8 @@ function TicketCommentBox({ ticket }) {
   const { comments } = useSelector((state) => state.comments);
   const { id } = ticket;
   const [commentDraft, setCommentDraft] = useState("");
+  const [showError, setShowError] = useState(false);
+
   const dispatch = useDispatch();
 
   function refetchComments() {
@@ -16,9 +25,13 @@ function TicketCommentBox({ ticket }) {
   }
 
   async function handlePostComment() {
-    await dispatch(createComment({ ticketId: id, comment: commentDraft }));
-    refetchComments();
-    setCommentDraft("");
+    if (!(commentDraft.length > 0)) {
+      setShowError(true);
+    } else {
+      await dispatch(createComment({ ticketId: id, comment: commentDraft }));
+      refetchComments();
+      setCommentDraft("");
+    }
   }
 
   return (
@@ -36,7 +49,12 @@ function TicketCommentBox({ ticket }) {
         onChange={(e) => setCommentDraft(e.target.value)}
         minRows={3}
       />
-      <Button size="small" sx={btnStyle} onClick={handlePostComment}>
+      <Button
+        size="small"
+        sx={btnStyle}
+        onClick={handlePostComment}
+        disabled={commentDraft.length === 0}
+      >
         Post
       </Button>
 
@@ -46,6 +64,18 @@ function TicketCommentBox({ ticket }) {
             <TicketComment key={idx} comment={comment} />
           ))}
       </Box>
+
+      <Snackbar
+        open={showError}
+        autoHideDuration={3000}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        onClose={() => setShowError(false)}
+      >
+        <SnackbarContent
+          message="⚠️  Please complete all fields"
+          sx={{ backgroundColor: "grey", justifyContent: "center" }}
+        />
+      </Snackbar>
     </Box>
   );
 }

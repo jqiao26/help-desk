@@ -1,16 +1,12 @@
 import { Box, Typography, Breadcrumbs, Divider } from "@mui/material";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setCurTab } from "../features/ticket/tickets";
 
 function TicketDescription({ ticket }) {
   const { name, summary } = ticket;
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   function handleNavigateAdminTab() {
-    navigate("/");
-    dispatch(setCurTab(1)); // navigate to admin tab
+    navigate("/admin-page");
   }
 
   return (

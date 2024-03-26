@@ -2,25 +2,25 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios'
 
 export const fetchTickets = createAsyncThunk('fetchTickets', async () => {
-  const response = await axios.get('http://localhost:8000/get-tickets')
+  const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/get-tickets`)
   return response.data
 })
 
 export const fetchTicketById = createAsyncThunk('fetchTicketById', async (id) => {
-  const response = await axios.get(`http://localhost:8000/get-ticket-by-id?i_d=${id}`)
+  const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/get-ticket-by-id?i_d=${id}`)
   return response.data
 })
 
 export const updateTicketStatusById = createAsyncThunk('updateTicketStatusById', async (newTicket) => {
   const { id, name, status, summary, email } = newTicket
-  axios.patch(`http://localhost:8000/update-ticket-by-id`, {
+  axios.patch(`${process.env.REACT_APP_BACKEND_URL}/update-ticket-by-id`, {
     id: id, name: name, status: status, summary: summary, email: email
   })
 })
 
 export const createTicket = createAsyncThunk('createTicket', async (ticket) => {
   const { name, summary, email } = ticket
-  await axios.post('http://localhost:8000/create-ticket', {
+  await axios.post(`${process.env.REACT_APP_BACKEND_URL}/create-ticket`, {
     name: name, email: email, summary: summary
   })
 })
@@ -28,8 +28,6 @@ export const createTicket = createAsyncThunk('createTicket', async (ticket) => {
 export const ticketsSlice = createSlice({
   name: 'helpDesk',
   initialState: {
-    curTab: 0,
-
     tickets: [],
     ticketsLoading: false,
 
@@ -37,9 +35,6 @@ export const ticketsSlice = createSlice({
     ticketDetailLoading: false,
   },
   reducers: {
-    setCurTab(state, action) {
-      state.curTab = action.payload
-    }
   },
   extraReducers(builder) {
     builder.addCase(fetchTickets.pending, (state) => {
@@ -59,5 +54,4 @@ export const ticketsSlice = createSlice({
   }
 })
 
-export const { setCurTab } = ticketsSlice.actions
 export default ticketsSlice.reducer
