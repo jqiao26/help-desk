@@ -14,6 +14,7 @@ import TicketComment from "./TicketComment";
 
 function TicketCommentBox({ ticket }) {
   const { comments } = useSelector((state) => state.comments);
+  const { ticketDetail } = useSelector((state) => state.tickets);
   const { id } = ticket;
   const [commentDraft, setCommentDraft] = useState("");
   const [showError, setShowError] = useState(false);
@@ -30,6 +31,7 @@ function TicketCommentBox({ ticket }) {
     } else {
       await dispatch(createComment({ ticketId: id, comment: commentDraft }));
       refetchComments();
+      console.log(`Send email to ${ticketDetail.email}: New Comment`);
       setCommentDraft("");
     }
   }

@@ -6,6 +6,7 @@ import TicketCommentBox from "../components/TicketCommentBox";
 import TicketDescription from "../components/TicketDescription";
 import { fetchComments } from "../features/comment/comments";
 import { fetchTicketById } from "../features/ticket/tickets";
+import NotFound from "../help-desk/NotFound";
 import TicketSideBar from "./TicketSideBar";
 
 function TicketDetailPage() {
@@ -26,10 +27,12 @@ function TicketDetailPage() {
   useEffect(() => {
     fetchTicketDetails();
     fetchCommentsByTicket();
-  }, []);
+  }, [ticketId]);
 
-  return ticketDetailLoading || !ticketDetail ? (
+  return ticketDetailLoading ? (
     <Typography>Loading...</Typography>
+  ) : !ticketDetail ? (
+    <NotFound />
   ) : (
     <Grid container spacing={5} width="90%">
       <Grid item sm={12} lg={7} md={7}>

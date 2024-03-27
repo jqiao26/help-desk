@@ -15,6 +15,7 @@ function TicketSideBar({ ticket }) {
 
   function handleStatusChange(e) {
     dispatch(updateTicketStatusById({ ...ticket, status: e.target.value }));
+    console.log(`Sending email to ${email}: Ticket status ${e.target.value}`);
   }
 
   return (

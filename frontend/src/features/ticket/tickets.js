@@ -31,6 +31,7 @@ export const ticketsSlice = createSlice({
     tickets: [],
     ticketsLoading: false,
 
+    ticketDetailError: false,
     ticketDetail: undefined,
     ticketDetailLoading: false,
   },
@@ -43,6 +44,11 @@ export const ticketsSlice = createSlice({
     builder.addCase(fetchTickets.fulfilled, (state, action) => {
       state.tickets = action.payload
       state.ticketsLoading = false
+    })
+    builder.addCase(fetchTicketById.rejected, (state) => {
+      console.log('hefuyhagiweufhaoweif')
+      state.ticketDetailError = true
+      state.ticketDetailLoading = false
     })
     builder.addCase(fetchTicketById.pending, (state) => {
       state.ticketDetailLoading = true

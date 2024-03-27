@@ -30,6 +30,9 @@ function TicketPage() {
         createTicket({ name: ticketName, email: email, summary: summary })
       );
       setShowSuccess(true);
+      console.log(`Sending email to ${email}: New Ticket Created`);
+      console.log(`Sending email to support@helpdesk.com: New Support Request`);
+
       e.target.reset();
     }
   }

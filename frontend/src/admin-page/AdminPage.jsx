@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTickets } from "../features/ticket/tickets";
 import { useNavigate } from "react-router-dom";
-import { statusMapping } from "../styles/commonStyles";
+import { statusDisplayMapping, statusMapping } from "../styles/commonStyles";
 
 const columns = (onTicketClick) => {
   return [
@@ -56,7 +56,7 @@ const columns = (onTicketClick) => {
               mb: 0.25,
             }}
           ></Box>
-          {params.value}
+          {statusDisplayMapping[params.value]}
         </Box>
       ),
     },
